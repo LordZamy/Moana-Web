@@ -1,4 +1,5 @@
 import firebase from 'firebase'
+import { browserHistory } from 'react-router'
 
 export const login = (email, password) => (dispatch) => {
     return firebase.auth().signInWithEmailAndPassword(email, password).catch((error) => {
@@ -12,8 +13,12 @@ export const login = (email, password) => (dispatch) => {
       if (user) {
         dispatch({
           type: 'LOGIN_SUCCESS',
+        })
+        dispatch({
+          type: 'ADD_USER',
           user
         })
+        transitionToDashboard()
       }
     });
 }
@@ -30,12 +35,20 @@ export const register = (email, password) => (dispatch) => {
     if (user) {
       user.updateProfile({
         displayName: name
-      }).then(
+      }).then(() => {
         dispatch({
           type: 'REGISTER_SUCCESS',
+        })
+        dispatch({
+          type: 'ADD_USER',
           user
         })
-      )
+        transitionToDashboard()
+      })
     }
   })
+}
+
+const transitionToDashboard = () => {
+  browserHistory.push('/dashboard')
 }

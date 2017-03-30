@@ -6,7 +6,8 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import firebase from 'firebase'
 
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import injectTapEventPlugin from 'react-tap-event-plugin'
 
 import Routes from './routes'
 import reducer from './reducers'
@@ -24,6 +25,9 @@ const config = {
   messagingSenderId: "839380443808"
 }
 firebase.initializeApp(config)
+
+// enable material-ui touch tap plugin
+injectTapEventPlugin();
 
 // bind material UI to app
 const MaterialUIRoutes = () => (

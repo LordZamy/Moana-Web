@@ -16,7 +16,32 @@ const authCreator = (authType) => (state = {}, action) => {
   }
 }
 
+const userData = (state = {}, action) => {
+  switch (action.type) {
+    case 'ADD_USER':
+      return Object.assign({}, state, {
+        firebaseUser: action.user
+      })
+    default:
+      return state
+  }
+}
+
+const initalDashboardState = {drawerOpen: false}
+const dashboard = (state = initalDashboardState, action) => {
+  switch (action.type) {
+    case 'TOGGLE_DRAWER':
+      return Object.assign({}, state, {
+        drawerOpen: !state.drawerOpen
+      })
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   login: authCreator('LOGIN'),
-  register: authCreator('REGISTER')
+  register: authCreator('REGISTER'),
+  userData,
+  dashboard
 });
