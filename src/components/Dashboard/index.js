@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react'
-import { Link } from 'react-router'
+import { Link, browserHistory } from 'react-router'
 import { connect } from 'react-redux'
 
 import AppBar from 'material-ui/AppBar'
@@ -7,12 +7,25 @@ import Drawer from 'material-ui/Drawer'
 import MenuItem from 'material-ui/MenuItem'
 import FlatButton from 'material-ui/FlatButton'
 
+import { logout } from '../../actions'
+
 import './style.css'
 
 class Dashboard extends Component {
   handleLeftIconClick = (e) => {
     e.preventDefault()
     this.props.toggleDrawer()
+  }
+
+  handleRightIconClick = (e) => {
+    e.preventDefault()
+    this.props.logout()
+  }
+
+  componentDidMount() {
+    // send user to login screen if unauthenticated
+    if (!this.props.user)
+      browserHistory.push('/')
   }
 
   render() {
@@ -23,6 +36,7 @@ class Dashboard extends Component {
         <AppBar title="Moana"
           iconElementRight={<FlatButton label="Logout" />}
           onLeftIconButtonTouchTap={this.handleLeftIconClick}
+          onRightIconButtonTouchTap={this.handleRightIconClick}
         />
         <Drawer open={this.props.drawerOpen} containerStyle={forceNavDown}>
           <MenuItem>Add Report</MenuItem>
@@ -36,13 +50,15 @@ class Dashboard extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    drawerOpen: state.dashboard.drawerOpen
+    drawerOpen: state.dashboard.drawerOpen,
+    user: state.userData.firebaseUser
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    toggleDrawer: () => dispatch({type: 'TOGGLE_DRAWER'})
+    toggleDrawer: () => dispatch({type: 'TOGGLE_DRAWER'}),
+    logout: () => dispatch(logout())
   }
 }
 

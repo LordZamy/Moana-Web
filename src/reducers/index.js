@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 
-// authType = 'LOGIN' or 'REGISTER'
+// authType = 'LOGIN' or 'REGISTER' or 'LOGOUT'
 const authCreator = (authType) => (state = {}, action) => {
   switch (action.type) {
     case `${authType}_FAILURE`:
@@ -22,6 +22,10 @@ const userData = (state = {}, action) => {
       return Object.assign({}, state, {
         firebaseUser: action.user
       })
+    case 'REMOVE_USER':
+      return Object.assign({}, state, {
+        firebaseUser: null
+      })
     default:
       return state
   }
@@ -42,6 +46,7 @@ const dashboard = (state = initalDashboardState, action) => {
 export default combineReducers({
   login: authCreator('LOGIN'),
   register: authCreator('REGISTER'),
+  logout: authCreator('LOGOUT'),
   userData,
   dashboard
 });

@@ -1,6 +1,10 @@
 import firebase from 'firebase'
 import { browserHistory } from 'react-router'
 
+const transitionTo = (url) => {
+  browserHistory.push(url)
+}
+
 export const login = (email, password) => (dispatch) => {
     return firebase.auth().signInWithEmailAndPassword(email, password).catch((error) => {
       var errorCode = error.code;
@@ -18,7 +22,7 @@ export const login = (email, password) => (dispatch) => {
           type: 'ADD_USER',
           user
         })
-        transitionToDashboard()
+        transitionTo('/dashboard')
       }
     });
 }
@@ -43,12 +47,26 @@ export const register = (email, password) => (dispatch) => {
           type: 'ADD_USER',
           user
         })
-        transitionToDashboard()
+        transitionTo('/dashboard')
       })
     }
   })
 }
 
-const transitionToDashboard = () => {
-  browserHistory.push('/dashboard')
+export const logout = () => (dispatch) => {
+  return firebase.auth().signOut().catch((error) => {
+    console.error(error)
+    dispatch({
+      type: 'LOGOUT_ERROR',
+      errorMessage: error
+    })
+  }).then(() => {
+    dispatch({
+      type: 'LOGOUT_SUCCESS'
+    })
+    dispatch({
+      type: 'REMOVE_USER'
+    })
+    transitionTo('/')
+  })
 }
