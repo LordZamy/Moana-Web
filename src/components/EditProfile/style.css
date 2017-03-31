@@ -1,0 +1,12 @@
+.EditProfile-form {
+  width: 40%;
+}
+
+.EditProfile-heading {
+  font-family: 'Open Sans Pro', sans-serif;
+  font-weight: 100;
+  font-size: 3em;
+  color: #34495e;
+  text-align: center;
+  display: block;
+}

@@ -41,8 +41,12 @@ class Dashboard extends Component {
         <Drawer open={this.props.drawerOpen} containerStyle={forceNavDown}>
           <MenuItem>Add Report</MenuItem>
           <MenuItem>View Reports</MenuItem>
-          <MenuItem>Edit Profile</MenuItem>
+          <Link className="Dashboard-link" to="/dashboard/editprofile"><MenuItem>Edit Profile</MenuItem></Link>
         </Drawer>
+
+        <div className="container">
+          {this.props.children}
+        </div>
       </div>
     )
   }
