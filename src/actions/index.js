@@ -61,12 +61,49 @@ export const logout = () => (dispatch) => {
       errorMessage: error
     })
   }).then(() => {
+    transitionTo('/')
     dispatch({
       type: 'LOGOUT_SUCCESS'
     })
     dispatch({
       type: 'REMOVE_USER'
     })
-    transitionTo('/')
   })
+}
+
+const accountTypes = ['User', 'Worker', 'Admin', 'Manager']
+
+export const updateProfile = (name, email, accountTypeId) => (dispatch) => {
+  let user = firebase.auth().currentUser
+  let accountType = accountTypes[accountTypeId]
+
+  if (user) {
+    name = (name === '') ? user.name : name
+    email = (email === '') ? user.email : email
+
+    return user.updateProfile({
+      displayName: name,
+      photoURL: accountType
+    }).catch((error) => {
+      console.error(error)
+    }).then(() => {
+      // update email only if it changes
+      // dispatch ADD_USER either way
+      if (email !== user.email) {
+        user.updateEmail(email).catch((error) => {
+          console.error(error)
+        }).then(() => {
+          dispatch({
+            type: 'ADD_USER',
+            user
+          })
+        })
+      } else {
+        dispatch({
+          type: 'ADD_USER',
+          user
+        })
+      }
+    })
+  }
 }

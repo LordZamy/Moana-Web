@@ -8,30 +8,37 @@ import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 import AlertBox from '../AlertBox'
 
+import { updateProfile } from '../../actions'
 import './style.css'
 
 class EditProfile extends Component {
   constructor(props) {
     super(props)
-    this.state = {value: 1}
-  }
-
-  handleSubmit = (e) => {
+    let accountTypeCodes = {'User': 0, 'Worker': 1, 'Admin': 2, 'Manager': 3}
+    let accountTypeId = accountTypeCodes[this.props.user.photoURL] || 0;
+    this.state = {value: accountTypeId}
   }
 
   handleChange = (e, index, value) => this.setState({value})
 
+  handleSubmit = (e) => {
+    e.preventDefault()
+
+    let data = new FormData(e.target)
+    this.props.updateProfile(data.get('name'), data.get('email'), this.state.value)
+  }
+
   render() {
     return (
-      <form className="EditProfile-form" method="post">
+      <form className="EditProfile-form" method="post" onSubmit={this.handleSubmit}>
         <h1 className="EditProfile-heading">Edit Profile</h1>
-        <TextField className="input" name="name" hintText="Name" type="text" />
-        <TextField className="input" name="email" hintText="Email" type="email" />
-        <SelectField floatingLabelText="Account Type" value={this.state.value} onChange={this.handleChange}>
-          <MenuItem value={1} primaryText="User" />
-          <MenuItem value={2} primaryText="Worker" />
-          <MenuItem value={3} primaryText="Admin" />
-          <MenuItem value={4} primaryText="Manager" />
+        <TextField className="input" name="name" defaultValue={this.props.user.displayName} hintText="Name" floatingLabelText="Name" type="text" />
+        <TextField className="input" name="email" defaultValue={this.props.user.email} hintText="Email" floatingLabelText="Name" type="email" />
+        <SelectField name="type" floatingLabelText="Account Type" value={this.state.value} onChange={this.handleChange}>
+          <MenuItem value={0} primaryText="User" />
+          <MenuItem value={1} primaryText="Worker" />
+          <MenuItem value={2} primaryText="Admin" />
+          <MenuItem value={3} primaryText="Manager" />
         </SelectField>
         <RaisedButton className="button" type="submit">Submit</RaisedButton>
       </form>
@@ -41,11 +48,13 @@ class EditProfile extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    user: state.userData.firebaseUser
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    updateProfile: (name, email, accountTypeId) => dispatch(updateProfile(name, email, accountTypeId))
   }
 }
 
