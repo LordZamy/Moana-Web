@@ -29,11 +29,16 @@ class EditProfile extends Component {
   }
 
   render() {
+    let success = null
+    if (this.props.success)
+      success = <AlertBox success={true}>Profile updated successfully!</AlertBox>
+
     return (
       <form className="EditProfile-form" method="post" onSubmit={this.handleSubmit}>
         <h1 className="EditProfile-heading">Edit Profile</h1>
+        {success}
         <TextField className="input" name="name" defaultValue={this.props.user.displayName} hintText="Name" floatingLabelText="Name" type="text" />
-        <TextField className="input" name="email" defaultValue={this.props.user.email} hintText="Email" floatingLabelText="Name" type="email" />
+        <TextField className="input" name="email" defaultValue={this.props.user.email} hintText="Email" floatingLabelText="Email" type="email" />
         <SelectField name="type" floatingLabelText="Account Type" value={this.state.value} onChange={this.handleChange}>
           <MenuItem value={0} primaryText="User" />
           <MenuItem value={1} primaryText="Worker" />
@@ -48,7 +53,8 @@ class EditProfile extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.userData.firebaseUser
+    user: state.userData.firebaseUser,
+    success: state.editProfile.success
   }
 }
 

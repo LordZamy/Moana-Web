@@ -6,3 +6,9 @@
   border: 1px solid #ebcccc;
   border-radius: .25rem;
 }
+
+.AlertBox-success {
+  background-color: #dff0d8;
+  border-color: #d0e9c6;
+  color: #3c763d;
+}

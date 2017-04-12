@@ -104,6 +104,10 @@ export const updateProfile = (name, email, accountTypeId) => (dispatch) => {
           user
         })
       }
+
+      dispatch({
+        type: 'EDIT_PROFILE_SUCCESS'
+      })
     })
   }
 }

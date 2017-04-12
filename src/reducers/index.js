@@ -43,10 +43,22 @@ const dashboard = (state = initalDashboardState, action) => {
   }
 }
 
+const editProfile = (state = {}, action) => {
+  switch (action.type) {
+    case 'EDIT_PROFILE_SUCCESS':
+      return Object.assign({}, state, {
+        success: true
+      })
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   login: authCreator('LOGIN'),
   register: authCreator('REGISTER'),
   logout: authCreator('LOGOUT'),
   userData,
-  dashboard
+  dashboard,
+  editProfile
 });
