@@ -6,6 +6,7 @@ import LoginForm from './components/LoginForm'
 import RegisterForm from './components/RegisterForm'
 import Dashboard from './components/Dashboard'
 import EditProfile from './components/EditProfile'
+import Map from './components/Map'
 
 const Routes = (props) => (
   <Router {...props}>
@@ -17,6 +18,7 @@ const Routes = (props) => (
       </Route>
       <Route path="/dashboard" component={Dashboard}>
         <Route path="/dashboard/editprofile" component={EditProfile} />
+        <Route path="/dashboard/map" component={Map} />
       </Route>
     </Route>
   </Router>
