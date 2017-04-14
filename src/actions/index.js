@@ -112,7 +112,58 @@ export const updateProfile = (name, email, accountTypeId) => (dispatch) => {
   }
 }
 
-export const addAvailReport = (name, value, location) => (dispatch) => {
+const availStatus = ['Available', 'Unavailable']
 
-    return
+export const addAvailReport = (name, status, lat, lng) => (dispatch) => {
+  let database = firebase.database()
+  let user = firebase.auth().currentUser
+  let postDate= new Date()
+  let postStatus = availStatus[status]
+  let account = {
+      accountType: user.photoURL.toUpperCase(),
+      emailAddress: user.email,
+      homeAddress: "",
+      name: user.displayName,
+      password: "",
+      username: user.uid
+  }
+  let date = {
+      date: postDate.getDate(),
+      day: postDate.getDay(),
+      hours: postDate.getHours(),
+      minutes: postDate.getMinutes(),
+      month: postDate.getMonth(),
+      seconds: postDate.getSeconds(),
+      time: postDate.getTime(),
+      timezoneOffset: postDate.getTimezoneOffset(),
+      year: postDate.getFullYear()-1900
+  }
+
+  // A post entry.
+  var postData = {
+    creator: {
+        account: account
+    },
+    date: date,
+    lat: lat,
+    lng: lng,
+    name: name,
+    status: postStatus
+  };
+
+  var newPostKey = firebase.database().ref().child('reports').child('availability').push().key;
+
+  var updates = {};
+  updates['/reports/availability/' + newPostKey] = postData;
+
+
+  if (database) {
+      return database.ref().update(updates).catch((error) => {
+      console.error(error)
+    }).then(() => {
+      dispatch({
+        type: 'ADD_REPORT_SUCCESS'
+      })
+    })
+  }
 }

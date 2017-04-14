@@ -12,20 +12,35 @@ import AlertBox from '../AlertBox'
 import { addAvailReport } from '../../actions'
 import './style.css'
 
+import GoogleMapReact from 'google-map-react'
+
 
 class AddAvailReport extends Component {
 
     constructor(props) {
       super(props)
-      this.state = {value: 0}
+      this.state = {status: 0, lat: 0, lng: 0}
     }
-  handleChange = (e, index, value) => this.setState({value})
+
+  handleChange = (e, index, value) => {
+      this.setState({status: value})
+  }
 
   handleSubmit = (e) => {
     e.preventDefault()
 
     let data = new FormData(e.target)
-    this.props.addAvailReport(data.get('name'), this.state.value, data.get('location'))
+    console.log("addReport");
+    this.props.addAvailReport(data.get('name'), this.state.status, this.state.lat, this.state.lng)
+  }
+
+  _onClick = ({x, y, lat, lng, event}) => {
+      this.setState({lat: lat, lng: lng})
+  }
+
+  static defaultProps = {
+    center: {lat: 33.7756178, lng: -84.3984737},
+    zoom: 15
   }
 
   render() {
@@ -34,28 +49,34 @@ class AddAvailReport extends Component {
         success = <AlertBox success={true}>Report added successfully</AlertBox>
 
     return (
+        <div>
+        <GoogleMapReact
+              defaultCenter={this.props.center}
+              defaultZoom={this.props.zoom}
+              onClick={this._onClick}>
+        </GoogleMapReact>
         <form className="AddAvailReport-form" method="post" onSubmit={this.handleSubmit}>
           <h1 className="AddAvailReport-heading">Add an Availability Report</h1>
           {success}
           <TextField className="input" name="name" defaultValue="Name" hintText="Name" floatingLabelText="Name" type="text" />
-          <TextField className="input" name="location" defaultValue="up your butt" hintText="Location" floatingLabelText="Location" type="text" />
-          <SelectField name="type" floatingLabelText="Is it availible?" value={this.state.value} onChange={this.handleChange}>
-            <MenuItem value={0} primaryText="Availible" />
-            <MenuItem value={1} primaryText="Unavailible" />
+          <SelectField name="type" floatingLabelText="Is it availible?" value={this.state.status} onChange={this.handleChange}>
+            <MenuItem value={0} primaryText="Available" />
+            <MenuItem value={1} primaryText="Unavailable" />
           </SelectField>
           <RaisedButton className="button" type="submit">Submit</RaisedButton>
         </form>
+        </div>
     )
   }
 }
 
 const mapStateToProps = (state) => {
-  return {
-  }
+  return
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    addAvailReport: (name, value, lat, lng) => dispatch(addAvailReport(name, value, lat, lng))
   }
 }
 
