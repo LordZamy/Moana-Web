@@ -164,6 +164,7 @@ export const addAvailReport = (name, status, lat, lng) => (dispatch) => {
       dispatch({
         type: 'ADD_REPORT_SUCCESS'
       })
+      //transitionTo('/dashboard/map')
     })
   }
 }

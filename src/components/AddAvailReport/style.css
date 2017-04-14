@@ -38,13 +38,13 @@
 .input {
   display: block !important;
   width: 100% !important;
-  margin-bottom: 1em;
+  margin-bottom: 0.5em;
 }
 
 .button {
   display: block !important;
   width: 100% !important;
-  margin-top: 2em;
+  margin-top: 1em;
 }
 
 .link {
@@ -52,4 +52,9 @@
   margin-top: 1em;
   text-decoration: none;
   color: #0d75c1;
+}
+
+.clickMap {
+    width: 350px;
+    height: 160px;
 }
