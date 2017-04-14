@@ -7,6 +7,7 @@ import RegisterForm from './components/RegisterForm'
 import Dashboard from './components/Dashboard'
 import EditProfile from './components/EditProfile'
 import Map from './components/Map'
+import AddAvailReport from './components/AddAvailReport'
 
 const Routes = (props) => (
   <Router {...props}>
@@ -19,6 +20,7 @@ const Routes = (props) => (
       <Route path="/dashboard" component={Dashboard}>
         <Route path="/dashboard/editprofile" component={EditProfile} />
         <Route path="/dashboard/map" component={Map} />
+        <Route path="/dashboard/addavailreport" component={AddAvailReport} />
       </Route>
     </Route>
   </Router>

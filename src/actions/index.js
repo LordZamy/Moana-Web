@@ -22,7 +22,7 @@ export const login = (email, password) => (dispatch) => {
           type: 'ADD_USER',
           user
         })
-        transitionTo('/dashboard')
+        transitionTo('/dashboard/map')
       }
     });
 }
@@ -110,4 +110,9 @@ export const updateProfile = (name, email, accountTypeId) => (dispatch) => {
       })
     })
   }
+}
+
+export const addAvailReport = (name, value, location) => (dispatch) => {
+
+    return
 }

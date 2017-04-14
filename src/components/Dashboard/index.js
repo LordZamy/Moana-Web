@@ -55,6 +55,7 @@ class Dashboard extends Component {
         open:false
       }
     })
+    this.props.toggleDrawer()
   }
 
   componentDidMount() {
@@ -74,17 +75,17 @@ class Dashboard extends Component {
           onRightIconButtonTouchTap={this.handleRightIconClick}
         />
         <Drawer open={this.props.drawerOpen} containerStyle={forceNavDown}>
+          <Link className="Dashboard-link" to="/dashboard/map"><MenuItem onTouchTap={(e) => this.props.toggleDrawer()}>View Map</MenuItem></Link>
           <MenuItem onTouchTap={(e) => this.handleMenuTouchTap(e, 'addReport')}>Add Report</MenuItem>
           <MenuItem onTouchTap={(e) => this.handleMenuTouchTap(e, 'viewReports')}>View Reports</MenuItem>
-          <MenuItem>Historical Report</MenuItem>
-          <Link className="Dashboard-link" to="/dashboard/map"><MenuItem>View Map</MenuItem></Link>
-          <Link className="Dashboard-link" to="/dashboard/editprofile"><MenuItem>Edit Profile</MenuItem></Link>
+          <MenuItem onTouchTap={(e) => this.props.toggleDrawer()}>Historical Report</MenuItem>
+          <Link className="Dashboard-link" to="/dashboard/editprofile"><MenuItem onTouchTap={(e) => this.props.toggleDrawer()}>Edit Profile</MenuItem></Link>
         </Drawer>
 
         <Popover open={this.state.addReport.open} anchorEl={this.state.addReport.anchorEl}
           onRequestClose={() => this.handleMenuRequestClose('addReport')}>
           <Menu>
-            <MenuItem>Availability</MenuItem>
+            <Link className="Dashboard-link" to="/dashboard/addAvailReport"><MenuItem onTouchTap={(e) => this.handleMenuRequestClose('addReport')}>Availability</MenuItem></Link>
             <MenuItem>Purity</MenuItem>
             <MenuItem>History</MenuItem>
             <MenuItem>Source</MenuItem>
