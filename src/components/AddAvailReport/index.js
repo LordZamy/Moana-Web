@@ -7,22 +7,18 @@ import RaisedButton from 'material-ui/RaisedButton'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 import AlertBox from '../AlertBox'
-
+import Marker from '../Marker'
 
 import { addAvailReport } from '../../actions'
 import './style.css'
 
 import GoogleMapReact from 'google-map-react'
 
-
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
-
 class AddAvailReport extends Component {
-
-    constructor(props) {
-      super(props)
-      this.state = {status: 0, lat: null, lng: null, isPosting: false}
-    }
+  constructor(props) {
+    super(props)
+    this.state = {status: 0, lat: null, lng: null, isPosting: false}
+  }
 
   handleChange = (e, index, value) => {
       this.setState({status: value})
@@ -52,37 +48,33 @@ class AddAvailReport extends Component {
   render() {
       let success = null
       if (this.props.success) {
-          success = <AlertBox success={true}>Report added successfully</AlertBox>
+          success = <AlertBox success={true}>Report added successfully!</AlertBox>
       } else if(this.state.isPosting) {
           success = <AlertBox success={false}>Posting</AlertBox>
       }
 
-
     return (
-        <div>
         <form className="AddAvailReport-form" method="post" onSubmit={this.handleSubmit}>
-          <h1 className="AddAvailReport-heading">Add an Availability Report</h1>
+          <h1 className="AddAvailReport-heading">Add Availability Report</h1>
           {success}
-          <TextField className="input" name="name" defaultValue="Name" hintText="Name" floatingLabelText="Name" type="text" />
-          <SelectField name="type" floatingLabelText="Is it availible?" value={this.state.status} onChange={this.handleChange}>
+          <TextField className="input" name="name" hintText="Name" floatingLabelText="Name" type="text" />
+          <SelectField name="type" floatingLabelText="Is it available?" value={this.state.status} onChange={this.handleChange}>
             <MenuItem value={0} primaryText="Available" />
             <MenuItem value={1} primaryText="Unavailable" />
           </SelectField>
-          <div className="clickMap">
+          <div className="AddAvailReport-map">
           <GoogleMapReact
-                defaultCenter={this.props.center}
-                defaultZoom={this.props.zoom}
-                onClick={this._onClick}>
-                <AnyReactComponent
+            defaultCenter={this.props.center}
+            defaultZoom={this.props.zoom}
+            onClick={this._onClick}>
+                <Marker
                   lat={this.state.lat}
                   lng={this.state.lng}
-                  text={'Selected Location'}
                 />
           </GoogleMapReact>
           </div>
           <RaisedButton className="button" type="submit">Submit</RaisedButton>
         </form>
-        </div>
     )
   }
 }

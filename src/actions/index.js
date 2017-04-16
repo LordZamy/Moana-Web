@@ -117,7 +117,13 @@ const availStatus = ['Available', 'Unavailable']
 export const addAvailReport = (name, status, lat, lng) => (dispatch) => {
   let database = firebase.database()
   let user = firebase.auth().currentUser
-  let postDate= new Date()
+
+  if (!user || !database) {
+    // TODO: error handling
+    return
+  }
+
+  let postDate = new Date()
   let postStatus = availStatus[status]
   let account = {
       accountType: user.photoURL.toUpperCase(),
@@ -136,7 +142,7 @@ export const addAvailReport = (name, status, lat, lng) => (dispatch) => {
       seconds: postDate.getSeconds(),
       time: postDate.getTime(),
       timezoneOffset: postDate.getTimezoneOffset(),
-      year: postDate.getFullYear()-1900
+      year: postDate.getFullYear() - 1900
   }
 
   // A post entry.
@@ -156,15 +162,12 @@ export const addAvailReport = (name, status, lat, lng) => (dispatch) => {
   var updates = {};
   updates['/reports/availability/' + newPostKey] = postData;
 
-
-  if (database) {
-      return database.ref().update(updates).catch((error) => {
-      console.error(error)
-    }).then(() => {
-      dispatch({
-        type: 'ADD_REPORT_SUCCESS'
-      })
-      //transitionTo('/dashboard/map')
+  return database.ref().update(updates).catch((error) => {
+    console.error(error)
+  }).then(() => {
+    dispatch({
+      type: 'ADD_REPORT_SUCCESS'
     })
-  }
+    //transitionTo('/dashboard/map')
+  })
 }
