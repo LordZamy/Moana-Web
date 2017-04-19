@@ -86,7 +86,7 @@ class Dashboard extends Component {
           onRequestClose={() => this.handleMenuRequestClose('addReport')}>
           <Menu>
             <Link className="Dashboard-link" to="/dashboard/addAvailReport"><MenuItem onTouchTap={(e) => this.handleMenuRequestClose('addReport')}>Availability</MenuItem></Link>
-            <MenuItem>Purity</MenuItem>
+            <Link className="Dashboard-link" to="/dashboard/addPurityReport"><MenuItem>Purity</MenuItem></Link>
             <MenuItem>History</MenuItem>
             <MenuItem>Source</MenuItem>
           </Menu>
