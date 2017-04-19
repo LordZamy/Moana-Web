@@ -9,16 +9,21 @@ import MenuItem from 'material-ui/MenuItem'
 import AlertBox from '../AlertBox'
 import Marker from '../Marker'
 
-import { addAvailReport } from '../../actions'
-// import './style.css'
+
+import { addPurityReport } from '../../actions'
+import './style.css'
 
 import GoogleMapReact from 'google-map-react'
 
+
+const AnyReactComponent = ({ text }) => <div>{text}</div>;
+
 class AddPurityReport extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {status: 0, lat: null, lng: null, isPosting: false}
-  }
+
+    constructor(props) {
+      super(props)
+      this.state = {status: 0, lat: null, lng: null, isPosting: false}
+    }
 
   handleChange = (e, index, value) => {
       this.setState({status: value})
@@ -30,8 +35,9 @@ class AddPurityReport extends Component {
     let data = new FormData(e.target)
     this.setState({isPosting: true})
     if(this.state.lat !== null || this.state.lng !== null){
-        this.props.addAvailReport(data.get('name'), this.state.status, this.state.lat, this.state.lng)
-        console.log("Report Added");
+        console.log(data.get('contPPM'));
+        this.props.addPurityReport(data.get('name'), data.get('location'), this.state.lat, this.state.lng, data.get('virusPPM'), data.get('contPPM'))
+
     }
   }
 
@@ -48,31 +54,35 @@ class AddPurityReport extends Component {
   render() {
       let success = null
       if (this.props.success) {
-          success = <AlertBox success={true}>Report added successfully!</AlertBox>
+          success = <AlertBox success={true}>Report added successfully</AlertBox>
       } else if(this.state.isPosting) {
           success = <AlertBox success={false}>Posting</AlertBox>
       }
 
+
     return (
-        <form className="Dashboard-form" method="post" onSubmit={this.handleSubmit}>
-          <h1 className="Dashboard-heading">Add Purity Report</h1>
+        <div>
+        <form className="AddPurityReport-form" method="post" onSubmit={this.handleSubmit}>
+          <h1 className="AddPurityReport-heading">Add an Purity Report</h1>
           {success}
-          <TextField className="Dashboard-input" name="name" hintText="Name" floatingLabelText="Name" type="text" />
-          <TextField className="Dashboard-input" name="virus" hintText="Virus PPM" floatingLabelText="Virus PPM" type="text" />
-          <TextField className="Dashboard-input" name="contamination" hintText="Contamination PPM" floatingLabelText="Contamination PPM" type="text" />
-          <div className="AddAvailReport-map">
-            <GoogleMapReact
-              defaultCenter={this.props.center}
-              defaultZoom={this.props.zoom}
-              onClick={this._onClick}>
-                  <Marker
-                    lat={this.state.lat}
-                    lng={this.state.lng}
-                  />
-            </GoogleMapReact>
+          <TextField className="input" name="name" defaultValue="Name" hintText="Name" floatingLabelText="Name" type="text" />
+          <TextField className="input" name="location" defaultValue="Location" hintText="Location" floatingLabelText="Location" type="text" />
+          <TextField className="input" name="virusPPM" defaultValue="Virus PPM" hintText="Virus PPM" floatingLabelText="Virus PPM" type="number" />
+          <TextField className="input" name="contPPM" defaultValue="Contamination PPM" hintText="Contamination PPM" floatingLabelText="Contamination PPM" type="number" />
+          <div className="clickMap">
+          <GoogleMapReact
+                defaultCenter={this.props.center}
+                defaultZoom={this.props.zoom}
+                onClick={this._onClick}>
+                    <Marker
+                      lat={this.state.lat}
+                      lng={this.state.lng}
+                    />
+          </GoogleMapReact>
           </div>
           <RaisedButton className="button" type="submit">Submit</RaisedButton>
         </form>
+        </div>
     )
   }
 }
@@ -85,7 +95,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    //addAvailReport: (name, value, lat, lng) => dispatch(addAvailReport(name, value, lat, lng))
+    addPurityReport: (name, location, lat, lng, virusPPM, contPPM) => dispatch(addPurityReport(name, location, lat, lng, virusPPM, contPPM))
   }
 }
 
