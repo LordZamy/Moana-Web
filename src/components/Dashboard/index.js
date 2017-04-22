@@ -103,7 +103,7 @@ class Dashboard extends Component {
           </Menu>
         </Popover>
 
-        <div className="container">
+        <div className="Dashboard-container">
           {this.props.children}
         </div>
       </div>

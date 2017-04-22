@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 
 import GoogleMapReact from 'google-map-react'
 
+import './style.css'
+
 class Map extends Component {
   // defaults to GT campus
   static defaultProps = {
@@ -13,10 +15,12 @@ class Map extends Component {
 
   render() {
     return (
-      <GoogleMapReact
-        defaultCenter={this.props.center}
-        defaultZoom={this.props.zoom}>
-      </GoogleMapReact>
+      <div className="Map-container">
+        <GoogleMapReact
+          defaultCenter={this.props.center}
+          defaultZoom={this.props.zoom}>
+        </GoogleMapReact>
+      </div>
     )
   }
 }

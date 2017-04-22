@@ -61,28 +61,26 @@ class AddPurityReport extends Component {
 
 
     return (
-        <div>
-        <form className="AddPurityReport-form" method="post" onSubmit={this.handleSubmit}>
-          <h1 className="AddPurityReport-heading">Add an Purity Report</h1>
-          {success}
-          <TextField className="input" name="name" defaultValue="Name" hintText="Name" floatingLabelText="Name" type="text" />
-          <TextField className="input" name="location" defaultValue="Location" hintText="Location" floatingLabelText="Location" type="text" />
-          <TextField className="input" name="virusPPM" defaultValue="Virus PPM" hintText="Virus PPM" floatingLabelText="Virus PPM" type="number" />
-          <TextField className="input" name="contPPM" defaultValue="Contamination PPM" hintText="Contamination PPM" floatingLabelText="Contamination PPM" type="number" />
-          <div className="clickMap">
-          <GoogleMapReact
-                defaultCenter={this.props.center}
-                defaultZoom={this.props.zoom}
-                onClick={this._onClick}>
-                    <Marker
-                      lat={this.state.lat}
-                      lng={this.state.lng}
-                    />
-          </GoogleMapReact>
-          </div>
-          <RaisedButton className="button" type="submit">Submit</RaisedButton>
-        </form>
+      <form className="Dashboard-form" method="post" onSubmit={this.handleSubmit}>
+        <h1 className="Dashboard-heading">Add Purity Report</h1>
+        {success}
+        <TextField className="Dashboard-input" name="name" hintText="Name" floatingLabelText="Name" type="text" />
+        <TextField className="Dashboard-input" name="location" hintText="Location" floatingLabelText="Location" type="text" />
+        <TextField className="Dashboard-input" name="virusPPM" hintText="Virus PPM" floatingLabelText="Virus PPM" type="number" />
+        <TextField className="Dashboard-input" name="contPPM" hintText="Contamination PPM" floatingLabelText="Contamination PPM" type="number" />
+        <div className="AddPurityReport-map">
+        <GoogleMapReact
+              defaultCenter={this.props.center}
+              defaultZoom={this.props.zoom}
+              onClick={this._onClick}>
+                  <Marker
+                    lat={this.state.lat}
+                    lng={this.state.lng}
+                  />
+        </GoogleMapReact>
         </div>
+        <RaisedButton className="button" type="submit">Submit</RaisedButton>
+      </form>
     )
   }
 }
