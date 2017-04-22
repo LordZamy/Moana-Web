@@ -65,6 +65,15 @@ const reportAdded = (state = {}, action) => {
   }
 }
 
+const updateReports = (state = {}, action) => {
+  switch (action.type) {
+    case 'REPORTS_UPDATED':
+      return Object.assign({}, state, action.reports)
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   login: authCreator('LOGIN'),
   register: authCreator('REGISTER'),
@@ -72,5 +81,6 @@ export default combineReducers({
   userData,
   dashboard,
   editProfile,
-  reportAdded
+  reportAdded,
+  reports: updateReports
 });

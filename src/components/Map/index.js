@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 import { connect } from 'react-redux'
 
 import GoogleMapReact from 'google-map-react'
+import Marker from '../Marker'
 
 import './style.css'
 
@@ -14,11 +15,17 @@ class Map extends Component {
   }
 
   render() {
+    const availReportList = Object.entries(this.props.reports.availability)
+    const availMarkerList = availReportList.map((report) =>
+      <Marker lat={report[1].lat} lng={report[1].lng}></Marker>
+    )
+
     return (
       <div className="Map-container">
         <GoogleMapReact
           defaultCenter={this.props.center}
           defaultZoom={this.props.zoom}>
+            {availMarkerList}
         </GoogleMapReact>
       </div>
     )
@@ -27,6 +34,7 @@ class Map extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    reports: state.reports
   }
 }
 

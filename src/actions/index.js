@@ -172,8 +172,6 @@ export const addAvailReport = (name, status, lat, lng) => (dispatch) => {
   })
 }
 
-
-
 export const addPurityReport = (name, location, lat, lng, virusPPM, contPPM) => (dispatch) => {
   let database = firebase.database()
   let user = firebase.auth().currentUser
@@ -229,4 +227,11 @@ export const addPurityReport = (name, location, lat, lng, virusPPM, contPPM) => 
       //transitionTo('/dashboard/map')
     })
   }
+}
+
+export const updateReports = (reports) => (dispatch) => {
+  dispatch({
+    type: 'REPORTS_UPDATED',
+    reports
+  })
 }

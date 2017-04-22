@@ -11,6 +11,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin'
 
 import Routes from './routes'
 import reducer from './reducers'
+import { updateReports } from './actions'
 
 import './index.css'
 
@@ -45,4 +46,11 @@ ReactDOM.render(
 
 store.subscribe(() => {
   console.log(store.getState())
+})
+
+// database listener
+const reportRef = firebase.database().ref('reports')
+reportRef.on('value', (snapshot) => {
+  console.log(snapshot.val())
+  store.dispatch(updateReports(snapshot.val()))
 })
