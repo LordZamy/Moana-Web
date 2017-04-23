@@ -95,8 +95,8 @@ class Dashboard extends Component {
         <Popover open={this.state.viewReports.open} anchorEl={this.state.viewReports.anchorEl}
           onRequestClose={() => this.handleMenuRequestClose('viewReports')}>
           <Menu>
-            <MenuItem>Availability</MenuItem>
-            <MenuItem>Purity</MenuItem>
+            <Link className="Dashboard-link" to="/dashboard/viewreports/Availability"><MenuItem onTouchTap={(e) => this.handleMenuRequestClose('viewReports')}>Availability</MenuItem></Link>
+            <Link className="Dashboard-link" to="/dashboard/viewreports/Purity"><MenuItem onTouchTap={(e) => this.handleMenuRequestClose('viewReports')}>Purity</MenuItem></Link>
             <MenuItem>History</MenuItem>
             <MenuItem>Source</MenuItem>
             <MenuItem>All</MenuItem>

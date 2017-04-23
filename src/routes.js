@@ -9,6 +9,7 @@ import EditProfile from './components/EditProfile'
 import Map from './components/Map'
 import AddAvailReport from './components/AddAvailReport'
 import AddPurityReport from './components/AddPurityReport'
+import ViewReports from './components/ViewReports'
 
 const Routes = (props) => (
   <Router {...props}>
@@ -23,6 +24,7 @@ const Routes = (props) => (
         <Route path="/dashboard/map" component={Map} />
         <Route path="/dashboard/addavailreport" component={AddAvailReport} />
         <Route path="/dashboard/addpurityreport" component={AddPurityReport} />
+        <Route path="/dashboard/viewreports/:type" component={ViewReports} />
       </Route>
     </Route>
   </Router>
