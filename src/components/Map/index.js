@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 
 import GoogleMapReact from 'google-map-react'
 import Marker from '../Marker'
+import MarkerPopover from '../MarkerPopover'
 
 import './style.css'
 
@@ -15,17 +16,30 @@ class Map extends Component {
   }
 
   render() {
-    const availReportList = Object.entries(this.props.reports.availability)
-    const availMarkerList = availReportList.map((report) =>
-      <Marker lat={report[1].lat} lng={report[1].lng}></Marker>
+    let availReportList = null, availMarkerList = null
+    availReportList = Object.entries(this.props.reports.availability)
+    availMarkerList = availReportList.map((report) =>
+      <Marker lat={report[1].lat} lng={report[1].lng} key={report[0]}>
+        <MarkerPopover report={report[1]} type="Availability"></MarkerPopover>
+      </Marker>
     )
+
+    let purityReportList = null, purityMarkerList = null;
+    if (this.props.accountType !== "User") {
+      purityReportList = Object.entries(this.props.reports.purity)
+      purityMarkerList = purityReportList.map((report) =>
+        <Marker lat={report[1].lat} lng={report[1].lng} key={report[0]}>
+          <MarkerPopover report={report[1]} type="Purity"></MarkerPopover>
+        </Marker>
+      )
+    }
 
     return (
       <div className="Map-container">
         <GoogleMapReact
           defaultCenter={this.props.center}
           defaultZoom={this.props.zoom}>
-            {availMarkerList}
+          {availMarkerList.concat(purityMarkerList)}
         </GoogleMapReact>
       </div>
     )
@@ -34,7 +48,8 @@ class Map extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    reports: state.reports
+    reports: state.reports,
+    accountType: state.userData.firebaseUser.photoURL
   }
 }
 

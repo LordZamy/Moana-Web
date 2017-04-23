@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 
 import './style.css'
 
@@ -8,8 +8,16 @@ class Marker extends Component {
   }
 
   render() {
+    let child = null
+    if (this.props.children) {
+        child = React.cloneElement(this.props.children, {$hover : this.props.$hover})
+    }
+
     return (
-      <div className="Marker-pin"></div>
+      <div>
+        {child}
+        <div className="Marker-pin"></div>
+      </div>
     )
   }
 }
