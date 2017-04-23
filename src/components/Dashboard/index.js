@@ -99,7 +99,7 @@ class Dashboard extends Component {
             <Link className="Dashboard-link" to="/dashboard/viewreports/Purity"><MenuItem onTouchTap={(e) => this.handleMenuRequestClose('viewReports')}>Purity</MenuItem></Link>
             <MenuItem>History</MenuItem>
             <MenuItem>Source</MenuItem>
-            <MenuItem>All</MenuItem>
+            <Link className="Dashboard-link" to="/dashboard/viewreports/All"><MenuItem onTouchTap={(e) => this.handleMenuRequestClose('viewReports')}>All</MenuItem></Link>
           </Menu>
         </Popover>
 

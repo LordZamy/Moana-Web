@@ -15,10 +15,10 @@ class ViewReports extends Component {
     type: 'Availability'
   }
 
-  generateReportList = (reports) => {
+  generateReportList = (reports, type) => {
       let reportEntries = Object.entries(reports)
       return reportEntries.map((report) =>
-        <ReportListItem report={report[1]} key={report[0]} type={this.props.params.type}></ReportListItem>
+        <ReportListItem report={report[1]} key={report[0]} type={type}></ReportListItem>
       )
   }
 
@@ -27,12 +27,15 @@ class ViewReports extends Component {
     let reports = null
     switch (this.props.params.type) {
       case 'Availability':
-        reports = this.generateReportList(this.props.reports.availability)
+        reports = this.generateReportList(this.props.reports.availability, 'Availability')
         break
       case 'Purity':
-        reports = this.generateReportList(this.props.reports.purity)
+        reports = this.generateReportList(this.props.reports.purity, 'Purity')
         break
       case 'All':
+        const availReports = this.generateReportList(this.props.reports.availability, 'Availability')
+        const purityReports = this.generateReportList(this.props.reports.purity, 'Purity')
+        reports = availReports.concat(purityReports)
         break
       default:
         reports = null
