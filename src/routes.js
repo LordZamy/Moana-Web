@@ -10,6 +10,7 @@ import Map from './components/Map'
 import AddAvailReport from './components/AddAvailReport'
 import AddPurityReport from './components/AddPurityReport'
 import ViewReports from './components/ViewReports'
+import HistoricalReport from './components/HistoricalReport'
 
 const Routes = (props) => (
   <Router {...props}>
@@ -25,6 +26,7 @@ const Routes = (props) => (
         <Route path="/dashboard/addavailreport" component={AddAvailReport} />
         <Route path="/dashboard/addpurityreport" component={AddPurityReport} />
         <Route path="/dashboard/viewreports/:type" component={ViewReports} />
+        <Route path="/dashboard/historical" component={HistoricalReport} />
       </Route>
     </Route>
   </Router>

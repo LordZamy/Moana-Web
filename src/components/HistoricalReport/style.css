@@ -1,0 +1,11 @@
+.HistoricalReport-container {
+  width: 50%;
+}
+
+.HistoricalReport-chart {
+  margin-top: 2em;
+}
+
+.HistoricalReport-datepicker {
+  margin-top: 0em;
+}

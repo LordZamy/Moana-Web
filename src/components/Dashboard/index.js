@@ -78,7 +78,7 @@ class Dashboard extends Component {
           <Link className="Dashboard-link" to="/dashboard/map"><MenuItem onTouchTap={(e) => this.props.toggleDrawer()}>View Map</MenuItem></Link>
           <MenuItem onTouchTap={(e) => this.handleMenuTouchTap(e, 'addReport')}>Add Report</MenuItem>
           <MenuItem onTouchTap={(e) => this.handleMenuTouchTap(e, 'viewReports')}>View Reports</MenuItem>
-          <MenuItem onTouchTap={(e) => this.props.toggleDrawer()}>Historical Report</MenuItem>
+          <Link className="Dashboard-link" to="/dashboard/historical"><MenuItem onTouchTap={(e) => this.props.toggleDrawer()}>Historical Report</MenuItem></Link>
           <Link className="Dashboard-link" to="/dashboard/editprofile"><MenuItem onTouchTap={(e) => this.props.toggleDrawer()}>Edit Profile</MenuItem></Link>
         </Drawer>
 
