@@ -172,7 +172,18 @@ export const addAvailReport = (name, status, lat, lng) => (dispatch) => {
   })
 }
 
+const isNumber = (n) => (
+  !isNaN(parseFloat(n)) && isFinite(n)
+)
+
 export const addPurityReport = (name, location, lat, lng, virusPPM, contPPM) => (dispatch) => {
+  if (!isNumber(virusPPM)) {
+    virusPPM = parseInt(virusPPM) || 0
+  }
+  if (!isNumber(contPPM)) {
+    contPPM = parseInt(contPPM) || 0
+  }
+
   let database = firebase.database()
   let user = firebase.auth().currentUser
   let postDate= new Date()
